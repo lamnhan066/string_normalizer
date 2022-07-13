@@ -1,5 +1,5 @@
 name: string_normalizer
-description: A new Flutter package project.
+description: Helps you to remove accents and diacritics from strings, it supports both static method and extension.
 version: 0.0.1
 homepage: https://github.com/vursin/string_normalizer
 
