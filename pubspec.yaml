@@ -1,0 +1,17 @@
+name: string_normalizer
+description: A new Flutter package project.
+version: 0.0.1
+homepage: https://github.com/vursin/string_normalizer
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+
+dev_dependencies:
+  test: ^1.21.3
+  lints: ^2.0.0
+  http: ^0.13.4
+
+flutter:
+
