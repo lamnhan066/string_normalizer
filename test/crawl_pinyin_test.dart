@@ -43,20 +43,21 @@ void main() async {
   print('}');
 }
 
-Map<int, String> parse(String data) {
+Map<String, String> parse(String data) {
   final matchAllPattern = RegExp(r'<tr(.*?)</tr>');
   final tdPattern = RegExp(r'<td>(.*?)</td>');
 
-  final result = <int, String>{};
+  final result = <String, String>{};
   final allMatchs = matchAllPattern.allMatches(data);
-  print(allMatchs.first.group(0));
   for (final match in allMatchs) {
     final tdMatchs = tdPattern.allMatches(match.group(0) ?? '');
     if (tdMatchs.isEmpty) continue;
 
+    // print(tdMatchs.elementAt(0).group(1));
+
     result.addAll(
       {
-        int.parse(tdMatchs.elementAt(0).group(1) ?? '0'):
+        tdMatchs.elementAt(0).group(1).toString():
             tdMatchs.elementAt(1).group(1) ?? ''
       },
     );
