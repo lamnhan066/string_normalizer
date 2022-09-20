@@ -1,4 +1,4 @@
-const data = <dynamic, String>{
+const data = <int, String>{
   0x0041: 'A',
   0x00C1: 'A',
   0x0102: 'A',

@@ -36,6 +36,10 @@ void main() async {
 
   final result = {...resultMain, ...resultMisc};
 
+  if (data.length != result.length) {
+    print('Available new strings');
+  }
+
   print('{');
   result.forEach((key, value) {
     print('0x$key : \'$value\',');
