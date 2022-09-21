@@ -2,6 +2,8 @@
 
 Helps you to remove accents and diacritics from strings.
 
+Data source: http://pinyin.info/unicode/diacritics.html
+
 ## Usage
 
 - Static method
