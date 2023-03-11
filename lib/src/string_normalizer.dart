@@ -21,11 +21,12 @@ class StringNormalizer {
   ///
   /// Convert all diacritical characters to ASCII characters
   static String normalize(String text) {
-    var result = text.toString();
-    for (final code in data.keys) {
-      result = result.replaceAll(String.fromCharCode(code), data[code]!);
+    StringBuffer result = StringBuffer();
+
+    for (final charCode in text.codeUnits) {
+      result.write(data[charCode] ?? String.fromCharCode(charCode));
     }
 
-    return result;
+    return result.toString();
   }
 }
