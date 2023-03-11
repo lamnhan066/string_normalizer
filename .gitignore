@@ -30,3 +30,4 @@ migrate_working_dir/
 build/
 
 test/crawl*
+test/local_new.dart
