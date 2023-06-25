@@ -1,10 +1,10 @@
 name: string_normalizer
 description: Helps you to remove accents and diacritics from strings, it supports both static method and extension.
-version: 0.1.0
+version: 0.2.0
 homepage: https://github.com/vursin/string_normalizer
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.18.0 <4.0.0"
 
 dev_dependencies:
   test: ^1.21.3

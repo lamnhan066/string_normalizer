@@ -4,8 +4,8 @@ Helps you to remove accents and diacritics from strings.
 
 Data source:
 
-- <http://pinyin.info/unicode/diacritics.html>
-- <https://www.unicode.org/Public/UNIDATA/NamesList.txt>
+- pinyin.info/unicode/diacritics.html
+- unicode.org/Public/UNIDATA/NamesList.txt
 
 ## Usage
 

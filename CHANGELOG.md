@@ -1,3 +1,8 @@
+## 0.2.0
+
+* Change sdk version to `>=2.18.0 <4.0.0`.
+* Improve pub scores.
+
 ## 0.1.0
 
 * Add new data from [source](<https://www.unicode.org/Public/UNIDATA/NamesList.txt>) (Only LATIN charcode).
