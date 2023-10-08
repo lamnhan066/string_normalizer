@@ -17,9 +17,9 @@ extension StringNormalizerE on String {
 class StringNormalizer {
   StringNormalizer._();
 
-  /// Normalize the [text]
+  /// Normalize the [text].
   ///
-  /// Convert all diacritical characters to ASCII characters
+  /// Convert all diacritical characters to ASCII characters.
   static String normalize(String text) {
     StringBuffer result = StringBuffer();
 

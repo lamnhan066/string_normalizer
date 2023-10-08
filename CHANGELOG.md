@@ -1,3 +1,8 @@
+## 0.2.1
+
+* Update comments.
+* Update homepage URL.
+
 ## 0.2.0
 
 * Change sdk version to `>=2.18.0 <4.0.0`.
