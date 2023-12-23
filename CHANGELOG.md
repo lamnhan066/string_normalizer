@@ -1,3 +1,9 @@
+## 0.2.2
+
+* Add new `MODIFIER LETTER` and `COMBINING` data.
+* Refactor the data, so we can easily see the real character.
+* Add a crawler.
+
 ## 0.2.1
 
 * Update comments.
