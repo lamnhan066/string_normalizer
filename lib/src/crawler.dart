@@ -2,6 +2,8 @@
 
 import 'package:http/http.dart' as http;
 
+import 'utils.dart';
+
 typedef CrawlData = Map<String, Set<String>>;
 
 class Crawler {
@@ -27,6 +29,14 @@ class Crawler {
     pinyin.forEach((key, value) {
       result.putIfAbsent(key, () => {});
       result[key]!.addAll(value);
+    });
+
+    var combinedUnicode = await parseSeparatedUnicodeData(unicodeSource);
+    var flatted = flatMap(result);
+    combinedUnicode.forEach((key, value) {
+      final normalizedKey = flatted[key] ?? key;
+      result.putIfAbsent(normalizedKey, () => {});
+      result[normalizedKey]!.addAll(value);
     });
 
     return result;
@@ -65,6 +75,83 @@ class Crawler {
     string.writeln('};');
 
     return string.toString();
+  }
+
+  /// Parse data from `unicode.org/Public/UNIDATA/NamesList.txt` from this format:
+  ///
+  /// ```
+  /// 0226	LATIN CAPITAL LETTER A WITH DOT ABOVE
+  /// 	: 0041 0307
+  /// 0227	LATIN SMALL LETTER A WITH DOT ABOVE
+  /// 	* Uralicist usage
+  /// 	: 0061 0307
+  /// 03AD	GREEK SMALL LETTER EPSILON WITH TONOS
+  /// 	: 03B5 0301
+  /// 0130	LATIN CAPITAL LETTER I WITH DOT ABOVE
+  /// 	= i dot
+  /// 	* Turkish, Azerbaijani
+  /// 	* lowercase is 0069
+  /// 	x (latin capital letter i - 0049)
+  /// 	: 0049 0307
+  /// ```
+  ///
+  /// To
+  ///
+  /// ```
+  /// {
+  ///   'A': {'Ȧ'},
+  ///   'a': {'ȧ'},
+  ///   'ε': {'έ'},
+  ///   'I': {'İ'}
+  /// }
+  /// ```
+  ///
+  /// After that, an unicode will be separated to separated character, so it
+  /// will be easier to remove the tone.
+  Future<CrawlData> parseSeparatedUnicodeData(String data) async {
+    final source = data.replaceAll('\n\t', ' ');
+    Map<int, Set<int>> allCombinedData = {};
+
+    for (final text in source.split('\n')) {
+      try {
+        if (text.contains(':')) {
+          final key = text.split('\t')[0];
+          final values = text.split(' : ')[1].split(' ');
+          if (values.length != 2) continue;
+          allCombinedData.addAll({
+            int.parse(key, radix: 16):
+                values.map((e) => int.parse(e, radix: 16)).toSet()
+          });
+        }
+      } catch (_) {
+        /* Skip if there is any value doesn't match the expected result*/
+      }
+    }
+
+    // Convert to returned type.
+    CrawlData result = CrawlData();
+    allCombinedData.forEach((key, value) {
+      final bestNormalized =
+          _getTheBestNormalizedCharacter(key, allCombinedData);
+      final char = String.fromCharCode(bestNormalized);
+      result.putIfAbsent(char, () => {});
+      result[char]!.add(String.fromCharCode(key));
+    });
+
+    return result;
+  }
+
+  int _getTheBestNormalizedCharacter(
+      int codeUnit, Map<int, Set<int>> combinedData) {
+    if (combinedData.containsKey(codeUnit)) {
+      final normalized = combinedData[codeUnit]!.first;
+      return _getTheBestNormalizedCharacter(
+        normalized,
+        {...combinedData}..remove(codeUnit),
+      );
+    }
+
+    return codeUnit;
   }
 
   /// Get data from https://www.unicode.org/Public/UNIDATA/NamesList.txt
