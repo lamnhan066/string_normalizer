@@ -2,45 +2,63 @@
 
 import 'package:http/http.dart' as http;
 
+typedef CrawlData = Map<String, Set<String>>;
+
 class Crawler {
   /// Crawl the data from trusted sources.
   Crawler();
 
-  Future<Map<String, Set<int>>> crawl() async {
-    var unicode = await _fromUnicode();
-    final pinyin = await _fromPinyin();
+  Future<CrawlData> crawl() async {
+    CrawlData result = CrawlData();
 
-    pinyin.forEach((key, value) {
-      if (!unicode.containsKey(key)) {
-        unicode[key] = value;
-      } else {
-        unicode[key]!.addAll(value);
-      }
+    String unicodeSource = await http.read(
+        Uri.parse('https://www.unicode.org/Public/UNIDATA/NamesList.txt'));
+
+    var unicode = await _fromUnicode(unicodeSource);
+    unicode.forEach((key, value) {
+      result.putIfAbsent(key, () => {});
+      result[key]!.addAll(value);
     });
 
-    return unicode;
+    String pinyinSource = await http
+        .read(Uri.parse('http://pinyin.info/unicode/diacritics.html'));
+    final pinyin = await _fromPinyin(pinyinSource);
+
+    pinyin.forEach((key, value) {
+      result.putIfAbsent(key, () => {});
+      result[key]!.addAll(value);
+    });
+
+    return result;
   }
 
   /// Convert the crawled data to string of this form:
   ///
   /// {
   ///   'A': {
-  ///     0x000041, // A
-  ///     0x0000c0, // À
-  ///     0x0000c1, // Á
-  ///     0x0000c2, // Â
-  ///     0x0000c3, // Ã
+  ///     A,
+  ///     À,
+  ///     Á,
+  ///     Â,
+  ///     Ã,
   ///   },
   ///   ...
   /// }
-  String crawledDataToString(Map<String, Set<int>> map) {
+  String crawledDataToString(CrawlData map) {
     StringBuffer string = StringBuffer();
     string.writeln('{');
     map.forEach((key, value) {
-      string.writeln("'$key': {");
+      if (key.contains("'")) {
+        string.writeln('r"$key": {');
+      } else {
+        string.writeln("r'$key': {");
+      }
       for (var element in value) {
-        string.writeln(
-            '0x${element.toRadixString(16).padLeft(6, '0')}, // ${String.fromCharCode(element)}');
+        if (element.contains("'")) {
+          string.writeln('r"$element",');
+        } else {
+          string.writeln("r'$element',");
+        }
       }
       string.writeln('},');
     });
@@ -50,16 +68,13 @@ class Crawler {
   }
 
   /// Get data from https://www.unicode.org/Public/UNIDATA/NamesList.txt
-  Future<Map<String, Set<int>>> _fromUnicode() async {
-    String data = await http.read(
-        Uri.parse('https://www.unicode.org/Public/UNIDATA/NamesList.txt'));
-
+  Future<CrawlData> _fromUnicode(String data) async {
     final regexps = [
       RegExp(r'LATIN (SMALL|CAPITAL) LETTER (?:.* )?([A-Z]{1,2})(?: .*)?$'),
       RegExp(r'MODIFIER LETTER (SMALL|CAPITAL) (?:.* )?([A-Z]{1,2})(?: .*)?$'),
     ];
 
-    final Map<String, Set<int>> result = {};
+    final result = CrawlData();
 
     for (final line in data.split('\n')) {
       final tab = line.split('\t');
@@ -80,9 +95,9 @@ class Crawler {
           }
 
           if (result.containsKey(letter)) {
-            result[letter]!.add(char);
+            result[letter]!.add(String.fromCharCode(char));
           } else {
-            result[letter] = {char};
+            result[letter] = {String.fromCharCode(char)};
           }
 
           break;
@@ -93,9 +108,9 @@ class Crawler {
       final emptyChar = '';
       if (tab[1].contains('COMBINING')) {
         if (result.containsKey(emptyChar)) {
-          result[emptyChar]!.add(char);
+          result[emptyChar]!.add(String.fromCharCode(char));
         } else {
-          result[emptyChar] = {char};
+          result[emptyChar] = {String.fromCharCode(char)};
         }
       }
     }
@@ -104,10 +119,7 @@ class Crawler {
   }
 
   /// Get data from http://pinyin.info/unicode/diacritics.html
-  Future<Map<String, Set<int>>> _fromPinyin() async {
-    String data = await http
-        .read(Uri.parse('http://pinyin.info/unicode/diacritics.html'));
-
+  Future<CrawlData> _fromPinyin(String data) async {
     // Remove \n, tab, space
     data = data.replaceAll('\n', '').replaceAll('\t', '');
     while (data.contains(' ')) {
@@ -140,16 +152,16 @@ class Crawler {
 
     final result = {...resultMain, ...resultMisc};
 
-    Map<String, Set<int>> finalResult = {};
+    final finalResult = CrawlData();
 
     result.forEach((key, value) {
       final parsed = int.tryParse(key, radix: 16);
 
       if (parsed != null) {
         if (finalResult.containsKey(value)) {
-          finalResult[value]!.add(parsed);
+          finalResult[value]!.add(String.fromCharCode(parsed));
         } else {
-          finalResult[value] = {parsed};
+          finalResult[value] = {String.fromCharCode(parsed)};
         }
       }
     });

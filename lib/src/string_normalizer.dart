@@ -1,6 +1,5 @@
-import 'package:string_normalizer/src/utils.dart';
-
 import 'data/local.dart';
+import 'utils.dart';
 
 /// StringNormalizer extension
 extension StringNormalizerE on String {
@@ -20,7 +19,7 @@ class StringNormalizer {
   StringNormalizer._();
 
   /// We do not need to initialize the data if it's not needed to use.
-  static Map<int, String>? _data;
+  static Map<String, String>? _data;
 
   /// Normalize the [text].
   ///
@@ -30,8 +29,8 @@ class StringNormalizer {
 
     StringBuffer result = StringBuffer();
 
-    for (final charCode in text.codeUnits) {
-      result.write(_data![charCode] ?? String.fromCharCode(charCode));
+    for (final charCode in text.split('')) {
+      result.write(_data![charCode] ?? charCode);
     }
 
     return result.toString();

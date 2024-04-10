@@ -1,6 +1,6 @@
 /// Flat the map
-Map<int, String> flatMap(Map<String, Set<int>> map) {
-  final Map<int, String> data0 = {};
+Map<String, String> flatMap(Map<String, Set<String>> map) {
+  final data0 = <String, String>{};
   map.forEach((key, value) {
     for (var element in value) {
       data0.addAll({element: key});
