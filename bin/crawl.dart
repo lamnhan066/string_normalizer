@@ -1,8 +1,9 @@
 import 'dart:io';
 
-import 'package:string_normalizer/src/crawler.dart';
 import 'package:string_normalizer/src/data/local.dart';
 import 'package:string_normalizer/src/utils.dart';
+
+import 'crawler/crawler.dart';
 
 void main(List<String> args) async {
   final crawler = Crawler();
@@ -21,13 +22,6 @@ void main(List<String> args) async {
 
   final file = File('lib/src/data/local.dart');
 
-  // Backup
-  if (file.existsSync()) {
-    final backupedFile = File('lib/src/data/local.bak.dart');
-    print('Backuping to `lib/data/local.bak.dart`..');
-    backupedFile.writeAsStringSync(file.readAsStringSync());
-  }
-
   print('Writing the new data to `lib/data/local.dart`..');
 
   // Write new file
@@ -44,10 +38,10 @@ const data =  ''';
   print('Done');
 }
 
-bool _mapEquals(Map<int, String> map1, Map<int, String> map2) {
+bool _mapEquals(Map<String, String> map1, Map<String, String> map2) {
   if (map1.keys.length != map2.keys.length) return false;
 
-  for (int k in map1.keys) {
+  for (String k in map1.keys) {
     if (!map2.containsKey(k)) return false;
     if (map1[k] != map2[k]) return false;
   }

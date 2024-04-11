@@ -1,3 +1,9 @@
+## 0.3.0
+
+* Use a new architecture to organize the Parser and Crawler.
+* Add the Greek language.
+* Add the Mathematical characters.
+
 ## 0.2.2
 
 * Add new `MODIFIER LETTER` and `COMBINING` data.

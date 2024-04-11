@@ -1,6 +1,7 @@
-import 'package:string_normalizer/src/crawler.dart';
 import 'package:string_normalizer/src/string_normalizer.dart';
 import 'package:test/test.dart';
+
+import '../bin/crawler/crawler.dart';
 
 void main() {
   test('Crawler', () async {
@@ -22,9 +23,47 @@ void main() {
     expect(normalized, equals('Day la chu co dau'));
   });
 
-  test('Specific test cases', () {
-    final normalized = 'ìáú'.normalize();
+  group('Special test cases -', () {
+    test('Combining characters', () {
+      final normalized = 'ìáú'.normalize();
+      expect(normalized, equals('iau'));
+    });
 
-    expect(normalized, equals('iau'));
+    test('English', () {
+      final text =
+          'Thîs Is à Löngêr Strîng Wîth Môre Cõmplicâtêd Cãses Änd Diãcritics.';
+      final expectedText =
+          'this is a longer string with more complicated cases and diacritics.';
+      final normalized = StringNormalizer.normalize(text).toLowerCase();
+      final normalizedExtension = text.normalize().toLowerCase();
+      expect(normalized, equals(expectedText));
+      expect(normalizedExtension, equals(expectedText));
+    });
+
+    test('Greek', () {
+      final text =
+          'Αυτή είναι η ελληνική φράση με ειδικούς χαρακτήρες! Αυτό είναι το νούμερο.';
+      final expectedText =
+          'αυτη ειναι η ελληνικη φραση με ειδικους χαρακτηρες! αυτο ειναι το νουμερο.';
+      final normalized = StringNormalizer.normalize(text).toLowerCase();
+      final normalizedExtension = text.normalize().toLowerCase();
+      expect(normalized, equals(expectedText));
+      expect(normalizedExtension, equals(expectedText));
+    });
+
+    test('Symbol', () {
+      final text = '🄐🄰🅐🅰';
+      final expectedText = 'aaaa';
+      final normalized = StringNormalizer.normalize(text).toLowerCase();
+      final normalizedExtension = text.normalize().toLowerCase();
+      expect(normalized, equals(expectedText));
+      expect(normalizedExtension, equals(expectedText));
+    });
+
+    test('Mathematical', () {
+      final text = '𝐀𝐁𝐂𝐃𝐚𝐛𝐜𝐝𝟘𝟙𝟚𝟛𝟜';
+      final expectedText = 'ABCDabcd01234';
+      expect(text.normalize(), equals(expectedText));
+    });
   });
 }
