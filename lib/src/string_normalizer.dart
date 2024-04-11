@@ -18,6 +18,7 @@ extension StringNormalizerE on String {
 
 /// Convert all diacritical characters to ASCII characters.
 class StringNormalizer {
+  // Internal.
   StringNormalizer._();
 
   /// We do not need to initialize the data if it's not needed to use.
@@ -31,8 +32,17 @@ class StringNormalizer {
 
     StringBuffer result = StringBuffer();
 
+    // Try to replace a whole character first then replace each code unit of a character.
     for (final char in text.characters) {
-      result.write(_data![char] ?? char);
+      if (_data!.containsKey(char)) {
+        result.write(_data![char]);
+      } else {
+        final codeUnits = char.codeUnits;
+        for (final codeUnit in codeUnits) {
+          final char = String.fromCharCode(codeUnit);
+          result.write(_data![char] ?? char);
+        }
+      }
     }
 
     return result.toString();
