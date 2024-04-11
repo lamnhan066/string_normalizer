@@ -19,6 +19,7 @@ class Crawler {
         ModifierParser(),
         CombiningParser(),
         GreekParser(),
+        MathematicalParser(),
       ],
     );
     return result;
