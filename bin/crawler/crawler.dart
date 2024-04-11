@@ -103,10 +103,6 @@ class Crawler {
             continue;
           }
 
-          if (String.fromCharCodes(parsed.char) == r'�') {
-            print(parsed.normalizedChar);
-          }
-
           result.putIfAbsent(parsed.normalizedChar, () => {});
           result[parsed.normalizedChar]!.add(String.fromCharCodes(parsed.char));
         }
