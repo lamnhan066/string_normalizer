@@ -59,5 +59,11 @@ void main() {
       expect(normalized, equals(expectedText));
       expect(normalizedExtension, equals(expectedText));
     });
+
+    test('Mathematical', () {
+      final text = '𝐀𝐁𝐂𝐃𝐚𝐛𝐜𝐝𝟘𝟙𝟚𝟛𝟜';
+      final expectedText = 'ABCDabcd01234';
+      expect(text.normalize(), equals(expectedText));
+    });
   });
 }
