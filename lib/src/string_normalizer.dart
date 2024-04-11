@@ -1,3 +1,5 @@
+import 'package:characters/characters.dart';
+
 import 'data/local.dart';
 import 'utils.dart';
 
@@ -29,8 +31,8 @@ class StringNormalizer {
 
     StringBuffer result = StringBuffer();
 
-    for (final charCode in text.split('')) {
-      result.write(_data![charCode] ?? charCode);
+    for (final char in text.characters) {
+      result.write(_data![char] ?? char);
     }
 
     return result.toString();

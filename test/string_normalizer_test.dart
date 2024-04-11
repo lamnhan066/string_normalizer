@@ -53,9 +53,9 @@ void main() {
 
   test('Specific test cases', () {
     final text =
-        'Thîs Is à Löngêr Strîng Wîth Môre Cõmplicâtêd Cãses Änd Diãcritics. Αυτή είναι η ελληνική φράση με ειδικούς χαρακτήρες! Αυτό είναι το νούμερο 1234.';
+        'Thîs Is à Löngêr Strîng Wîth Môre Cõmplicâtêd Cãses Änd Diãcritics. Αυτή είναι η ελληνική φράση με ειδικούς χαρακτήρες! Αυτό είναι το νούμερο 1234. 🄐🄰🅐🅰';
     final expectedText =
-        'this is a longer string with more complicated cases and diacritics. αυτη ειναι η ελληνικη φραση με ειδικους χαρακτηρες! αυτο ειναι το νουμερο 1234.';
+        'this is a longer string with more complicated cases and diacritics. αυτη ειναι η ελληνικη φραση με ειδικους χαρακτηρες! αυτο ειναι το νουμερο 1234. aaaa';
     final normalized = StringNormalizer.normalize(text).toLowerCase();
     final normalizedExtension = text.normalize().toLowerCase();
     expect(normalized, equals(expectedText));
