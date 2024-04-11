@@ -162,8 +162,6 @@ class MathematicalParser extends CrawlParser {
 
     // Use pre-defined character map with 2 words.
     if (char == null) {
-      final lastTwoWords = chars.sublist(chars.length - 2).join(' ');
-
       for (final map in replacement.entries) {
         if (data.name.endsWith(map.key)) {
           char = map.value;
