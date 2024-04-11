@@ -1,8 +1,9 @@
 import 'dart:io';
 
-import 'package:string_normalizer/src/crawler.dart';
 import 'package:string_normalizer/src/data/local.dart';
 import 'package:string_normalizer/src/utils.dart';
+
+import 'crawler/crawler.dart';
 
 void main(List<String> args) async {
   final crawler = Crawler();
