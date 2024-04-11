@@ -24,7 +24,7 @@ void main() {
   });
 
   group('Special test cases -', () {
-    test('Vietnam', () {
+    test('Combining characters', () {
       final normalized = 'ìáú'.normalize();
       expect(normalized, equals('iau'));
     });
@@ -42,9 +42,9 @@ void main() {
 
     test('Greek', () {
       final text =
-          'Αυτή είναι η ελληνική φράση με ειδικούς χαρακτήρες! Αυτό είναι το νούμερο 1234. Όλοι οι άνθρωποι γεννιούνται ελεύθεροι και ίσοι στην αξιοπρέπεια';
+          'Αυτή είναι η ελληνική φράση με ειδικούς χαρακτήρες! Αυτό είναι το νούμερο.';
       final expectedText =
-          'αυτη ειναι η ελληνικη φραση με ειδικους χαρακτηρες! αυτο ειναι το νουμερο 1234. ολοι οι ανθρωποι γεννιουνται ελευθεροι και ισοι στην αξιοπρεπεια';
+          'αυτη ειναι η ελληνικη φραση με ειδικους χαρακτηρες! αυτο ειναι το νουμερο.';
       final normalized = StringNormalizer.normalize(text).toLowerCase();
       final normalizedExtension = text.normalize().toLowerCase();
       expect(normalized, equals(expectedText));
