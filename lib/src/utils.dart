@@ -1,11 +1,16 @@
 /// Flat the map
 Map<String, String> flatMap(Map<String, Set<String>> map) {
-  final data0 = <String, String>{};
+  final result = <String, String>{};
   map.forEach((key, value) {
     for (var element in value) {
-      data0.addAll({element: key});
+      // Priorize the element that the `key` is not empty.
+      if (!result.containsKey(element)) {
+        result.addAll({element: key});
+      } else if (key != '') {
+        result.addAll({element: key});
+      }
     }
   });
 
-  return data0;
+  return result;
 }
