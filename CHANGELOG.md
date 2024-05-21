@@ -1,3 +1,7 @@
+## 0.3.1
+
+* Use `DartFormatter` instead of running `dart format`.
+
 ## 0.3.0
 
 * Use a new architecture to organize the Parser and Crawler.
