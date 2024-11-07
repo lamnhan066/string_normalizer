@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:dart_style/dart_style.dart';
 import 'package:string_normalizer/src/data/local.dart';
-import 'package:string_normalizer/src/utils.dart';
 
 import 'crawler/crawler.dart';
+import 'crawler/utils.dart';
 
 void main(List<String> args) async {
   final crawler = Crawler();
@@ -13,7 +13,7 @@ void main(List<String> args) async {
   final map = await crawler.crawl();
   final flattedMap = flatMap(map);
 
-  if (_mapEquals(flattedMap, flatMap(data))) {
+  if (_mapEquals(flattedMap, data)) {
     print('The local data is up to date');
     print('Done');
     return;

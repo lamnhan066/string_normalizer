@@ -1,9 +1,12 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 import 'models/crawl_parser.dart';
 import 'models/input_data.dart';
+import 'utils.dart';
 
 class Crawler {
   /// Crawl the data from trusted sources.
@@ -28,37 +31,18 @@ class Crawler {
   /// Convert the crawled data to string of this form:
   ///
   /// {
-  ///   'A': {
-  ///     A,
-  ///     À,
-  ///     Á,
-  ///     Â,
-  ///     Ã,
-  ///   },
+  ///   'A': 'A',
+  ///   'À': 'A'
+  ///   'Á': 'A',
   ///   ...
   /// }
   String crawledDataToString(CrawlData map) {
     StringBuffer string = StringBuffer();
-    string.writeln('<String, Set<String>>{');
-    map.forEach((key, value) {
-      if (key.contains("'")) {
-        string.writeln('r"$key": {');
-      } else {
-        string.writeln("r'$key': {");
-      }
-      for (var element in value) {
-        if (element == '�') {
-          print(key);
-        }
-        if (element.contains("'")) {
-          string.writeln('r"$element",');
-        } else {
-          string.writeln("r'$element', ");
-        }
-      }
-      string.writeln('},');
-    });
-    string.writeln('};');
+    string.writeln('<String, String>');
+    final flattedMap = flatMap(map);
+    final json = jsonEncode(flattedMap);
+    string.write(json);
+    string.writeln(';');
 
     return string.toString();
   }
