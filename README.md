@@ -79,7 +79,7 @@ group('Special test cases -', () {
 
 ## Contribution
 
-- Run an internal Crawler:
+- Run an internal Crawler (The Crawler is also automatically ran weekly by the github-bot):
 
   - Fork the project on github.
   - Run `dart run string_normalizer:crawl`.
