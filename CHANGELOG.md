@@ -1,3 +1,8 @@
+## 0.3.3
+
+* Save the database as flatted map instead of Crawler map to improve the performance.
+* Add some topics.
+
 ## 0.3.2
 
 * Update the database by the crawler (07/11/2024).
