@@ -1,3 +1,8 @@
+## 0.3.2
+
+* Update the database by the crawler (07/11/2024).
+* Add a workflows to run the crawler weekly to check for the new database and create a PR when needed.
+
 ## 0.3.1
 
 * Use `DartFormatter` instead of running `dart format`.
