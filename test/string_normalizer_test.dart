@@ -1,7 +1,7 @@
 import 'package:string_normalizer/src/string_normalizer.dart';
 import 'package:test/test.dart';
 
-import '../bin/crawler/crawler.dart';
+import '../tool/crawler/crawler.dart';
 
 void main() {
   test('Crawler', () async {
