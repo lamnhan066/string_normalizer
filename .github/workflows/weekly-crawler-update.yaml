@@ -19,7 +19,7 @@ jobs:
           sdk: stable
 
       - name: Run Crawler
-        run: dart run string_normalizer:crawl
+        run: dart run tool/crawl.dart
 
       - name: Check for changes
         run: |
