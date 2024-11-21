@@ -1,6 +1,6 @@
 name: string_normalizer
 description: Helps you remove accents and diacritics from strings. It comes with a built-in Crawler feature.
-version: 0.3.3
+version: 0.3.4
 homepage: https://github.com/lamnhan066/string_normalizer
 topics:
   - normalization
@@ -13,9 +13,9 @@ environment:
 
 dependencies:
   characters: ^1.3.0
-  dart_style: ^2.3.6
-  http: ^1.1.2
 
 dev_dependencies:
   test: ^1.25.5
   lints: ^4.0.0
+  dart_style: ^2.3.6
+  http: ^1.1.2

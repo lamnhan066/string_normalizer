@@ -1,3 +1,8 @@
+## 0.3.4
+
+* The package no longer depends on the `http` and `dart_style` package.
+* Change the way to run the crawler to `dart run tool/crawl.dart`.
+
 ## 0.3.3
 
 * Save the database as flatted map instead of Crawler map to improve the performance.
