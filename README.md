@@ -82,10 +82,10 @@ group('Special test cases -', () {
 - Run an internal Crawler (The Crawler is also automatically ran weekly by the github-bot):
 
   - Fork the project on github.
-  - Run `dart run string_normalizer:crawl`.
+  - Run `dart run tool/crawl.dart`.
   - The crawler will let you know if there is an available update.
   - Open a PR if there is an update.
 
-- Modify [the Crawler](https://github.com/lamnhan066/string_normalizer/tree/main/bin/crawler/) to get the new data.
+- Modify [the Crawler](https://github.com/lamnhan066/string_normalizer/tree/main/tool/crawler/) to get the new data.
 
 - Open an issue or PR.
