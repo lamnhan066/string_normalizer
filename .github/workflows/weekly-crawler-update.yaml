@@ -37,6 +37,7 @@ jobs:
             git push -u origin HEAD:crawler-update
           else
             echo "No changes detected"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
