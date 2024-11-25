@@ -3,10 +3,9 @@ name: Weekly Crawler Update
 on:
   push:
     branches:
-      - main # Adjust this to your default branch
+      - main
   schedule:
-    # Runs at 00:00 every Monday
-    - cron: "0 0 * * 1"
+    - cron: "0 0 * * 1" # Runs at 00:00 every Monday
 
 jobs:
   update-database:
@@ -46,7 +45,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: crawler-update
-          base: main # Adjust to your default branch
+          base: main
           title: "Automated Database Update"
           body: |
             This pull request contains the latest updates from the crawler.
