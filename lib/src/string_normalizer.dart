@@ -24,17 +24,23 @@ class StringNormalizer {
   ///
   /// Convert all diacritical characters to ASCII characters.
   static String normalize(String text) {
-    StringBuffer result = StringBuffer();
+    final result = StringBuffer();
 
     // Try to replace a whole character first then replace each code unit of a character.
     for (final char in text.characters) {
-      if (data.containsKey(char)) {
-        result.write(data[char]);
+      final normalizedChar = data[char];
+      if (normalizedChar != null) {
+        result.write(normalizedChar);
       } else {
         final codeUnits = char.codeUnits;
-        for (final codeUnit in codeUnits) {
-          final char = String.fromCharCode(codeUnit);
-          result.write(data[char] ?? char);
+
+        if (codeUnits.length == 1) {
+          result.write(char);
+        } else {
+          for (final unit in codeUnits) {
+            final unitChar = String.fromCharCode(unit);
+            result.write(data[unitChar] ?? unitChar);
+          }
         }
       }
     }
