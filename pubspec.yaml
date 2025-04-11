@@ -1,9 +1,9 @@
 name: string_normalizer
 description: Helps you remove accents and diacritics from strings. It comes with a built-in Crawler feature.
-version: 0.3.4
+version: 0.3.5
 homepage: https://github.com/lamnhan066/string_normalizer
 topics:
-  - normalization
+  - normalize
   - unicode
   - accents
   - diacritics

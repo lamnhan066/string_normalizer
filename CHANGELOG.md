@@ -1,3 +1,7 @@
+## 0.3.5
+
+* Improve internal logics to improve the perfomance.
+
 ## 0.3.4
 
 * The package no longer depends on the `http` and `dart_style` package.
