@@ -1,3 +1,7 @@
+## 0.4.0
+
+* Update the database by the crawler (20/10/2025) [PR #7](https://github.com/lamnhan066/string_normalizer/pull/7).
+
 ## 0.3.5
 
 * Improve internal logics to improve the perfomance.
